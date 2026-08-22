@@ -35,10 +35,16 @@ import java.util.Random;
 import java.util.Stack;
 
 public class _01_IntroToQueue {
+
+    Stack<Double> doublesStack = new Stack<>();
+    ArrayDeque<Double> doublesQueue = new ArrayDeque<>();
+
     public static void main(String[] args) {
+        _01_IntroToQueue introToQueue = new _01_IntroToQueue();
+    }
+    public _01_IntroToQueue(){
         // 1. Create a Stack of Doubles using the Stack class
         //    Note: you have to use the capitalized Double and not double
-        Stack<Double> doublesStack = new Stack<>();
         // 2. Use a loop to add 100 random doubles between 0 and 100 to the Stack
         for (int i = 0; i<100; i++){
             Random ran = new Random();
@@ -46,8 +52,7 @@ public class _01_IntroToQueue {
         }
         // 3. Create a Queue of Doubles using the ArrayDeque class
         //    Note: you have to use the capitalized Double and not double
-        ArrayDeque<Double> doublesQueue = new ArrayDeque<>();
-        // 4. Pop off 5 elements from the Stack and add them to the Queue 
+        // 4. Pop off 5 elements from the Stack and add them to the Queue
         for (int i = 0; i < 5; i++) {
             doublesQueue.push(doublesStack.pop());
         }
@@ -56,11 +61,43 @@ public class _01_IntroToQueue {
         //    "removing 3 elements from Queue: 25 57 2"
 
         // 6. Pop off as many elements from the stack to fill the Queue with 5
-        //    elements. If there aren't enough elements in the Stack to fill the 
-        //    queue, fill the queue as much as possible. 
+        //    elements. If there aren't enough elements in the Stack to fill the
+        //    queue, fill the queue as much as possible.
+
 
         // 7. Loop until there are no more elements in either the Stack or Queue
         //    and all the elements are printed
-        
+        loopThrough();
+    }
+    public void loopThrough(){
+        while (!doublesStack.isEmpty() || !doublesQueue.isEmpty()){
+            removeFromQueue();
+            addToQueue();
+        }
+        //debug
+        System.out.println("Queue Size: "+ doublesQueue.size());
+        System.out.println("Stack Size: "+ doublesStack.size());
+    }
+    public void removeFromQueue(){
+        Random elementsRemoved = new Random();
+        StringBuilder string;
+        int temp = elementsRemoved.nextInt(5);
+        string = new StringBuilder("removing " + temp + " elements from Queue: ");
+        for (int i = 0; i < temp; i++) {
+            if (!doublesQueue.isEmpty()) {
+                string.append(" ").append(doublesQueue.pop());
+            }
+        }
+        System.out.println(string);
+    }
+    public void addToQueue(){
+        while(doublesQueue.size()<5){
+            if (!doublesStack.isEmpty()){
+                doublesQueue.push(doublesStack.pop());
+            }
+            else {
+                break;
+            }
+        }
     }
 }
