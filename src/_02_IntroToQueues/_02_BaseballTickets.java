@@ -35,25 +35,55 @@ import java.util.ArrayDeque;
 public class _02_BaseballTickets {
 
     public static int calculateWaitTime( ArrayDeque<Integer> ticketsQueue, int position ) {
+        //i dont know what im doing
         int minutes = 0;
-        for (int i = 0; i < position; i++) {
-            ticketsQueue.push(ticketsQueue.pop() - 1);
-            minutes+=1;
-        }
-        int numOfTickets = ticketsQueue.getFirst();
-
-
-            while (numOfTickets<0) {
-                for (int i = 0; i < ticketsQueue.size(); i++) {
-                    ticketsQueue.push(ticketsQueue.pop() - 1);
-                    minutes += 1;
-                    if (i == ticketsQueue.size()-1){
-                        numOfTickets =-1;
-                    }
-                }
+        int dynamicPosition = position;
+        int maxPosition = position;
+        while (!isPositionValueCompleted(ticketsQueue, dynamicPosition)) {
+            int poppedVar = ticketsQueue.pop();
+            if (poppedVar == 0){
+                ticketsQueue.pop();
+                maxPosition =-1;
             }
+            else {
+                ticketsQueue.pop();
+                ticketsQueue.push(poppedVar-1);
+                minutes += 1;
+                dynamicPosition =-1;
+            }
+        }
 
+        System.out.println(ticketsQueue.getFirst());
 
+//        int numOfTickets = ticketsQueue.getFirst();
+//            for (int i = 0; i<ticketsQueue.size(); i++) {
+//                int poppedVar = ticketsQueue.pop();
+//                if (poppedVar != 0) {
+//                    ticketsQueue.push(poppedVar - 1);
+//                    minutes += 1;
+//                    //System.out.println(poppedVar);
+//                }
+//                if (numOfTickets>0 && i == ticketsQueue.size()-1){
+//                    numOfTickets -=1;
+//                    i=0;
+//                }
+//            }
         return minutes;
     }
+    static boolean isPositionValueCompleted(ArrayDeque<Integer> ticketsQueue, int position){
+        boolean completed = false;
+        int currentIndex = 0;
+        for (int element : ticketsQueue) {
+            if (currentIndex == position) {
+//                if (element == 0){
+//                    completed = true;
+//                }
+                completed = element == 0;
+                break;
+            }
+            currentIndex++;
+        }
+        return completed;
+    }
 }
+
