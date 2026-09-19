@@ -5,17 +5,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Stack;
 
-public class Hangman implements KeyListener{
+public class Hangman implements KeyListener {
     //member vars
     Stack<String> stackOfWords = new Stack<>();
     int lives = 10;
     JFrame frame = new JFrame();
     JPanel panel = new JPanel();
     JLabel UI = new JLabel();
-    StringBuilder wordStatus = new StringBuilder();
+    StringBuilder wordGuess = new StringBuilder();
     String word;
 
-    public Hangman (){
+    public Hangman() {
         //asks and selects the amount of words the user wants to play
         String numOfWords = JOptionPane.showInputDialog("Enter the number of words to guess (1-100)");
         selectWords(Integer.parseInt(numOfWords));
@@ -36,7 +36,7 @@ public class Hangman implements KeyListener{
         new Hangman();
     }
 
-    void selectWords(int quantity){
+    void selectWords(int quantity) {
         //selects a random word however many times is queried by the user
         //then pushes the words to a stack
         for (int i = 0; i < quantity; i++) {
@@ -45,14 +45,14 @@ public class Hangman implements KeyListener{
                 stackOfWords.push(randomWord);
             }
             //if word is already in stack, move on
-            else{
+            else {
                 i -= 1;
             }
         }
     }
 
     //this method gets called once, and what happens in it happens the whole time
-    public void playAllWords(){
+    public void playAllWords() {
         //calls the code inside for each word in the stack
         for (int i = stackOfWords.size(); i > 0; i--) {
             word = stackOfWords.pop();
@@ -60,7 +60,7 @@ public class Hangman implements KeyListener{
             JOptionPane.showMessageDialog(null, "You guessed the hidden word!");
 
             //resets game for next word
-            wordStatus = new StringBuilder();
+            wordGuess = new StringBuilder();
             lives = 10;
         }
 
@@ -69,20 +69,20 @@ public class Hangman implements KeyListener{
         System.exit(0);
     }
 
-    public void playOneWord(String word){
+    public void playOneWord(String word) {
         //sets the word status in the game to have underscores for however many letters there are
-        wordStatus.repeat("_", word.length());
+        wordGuess.repeat("_ ", word.length());
 
-        //while word isnt finished, set gameplay ui to whatever the status of the game is
-        while (!isWordFinished(wordStatus.toString())){
-            UI.setText(wordStatus +"  Lives: "+lives);
+        //while word isn't finished, set gameplay ui to whatever the status of the game is
+        while (!isWordFinished(wordGuess.toString())) {
+            UI.setText(wordGuess + "  Lives: " + lives);
             frame.pack();
         }
-        UI.setText(wordStatus +"  Lives: "+lives);
+        UI.setText(wordGuess + "  Lives: " + lives);
     }
 
     //checks if word is guessed or not
-    public boolean isWordFinished(String wordStatus){
+    public boolean isWordFinished(String wordStatus) {
         return !wordStatus.contains("_");
     }
 
@@ -92,22 +92,24 @@ public class Hangman implements KeyListener{
     }
 
     public void keyPressed(KeyEvent e) {
+        System.out.println(wordGuess);
         //iterates through all characters of word and checks if there are
         //matches with the typed key
         boolean letterPresent = false;
-        for (int i = 0; i < wordStatus.length(); i++) {
-            if (word.charAt(i) == e.getKeyChar()){
-                wordStatus.setCharAt(i, e.getKeyChar());
+        for (int i = 0; i < wordGuess.length()*2; i+=2) {
+            if (word.charAt(i/2) == e.getKeyChar()) {
+                wordGuess.setCharAt((i/2), e.getKeyChar());
                 letterPresent = true;
             }
         }
+        System.out.println(wordGuess);
 
         //if guessed letter isn't in word, subtract lives by 1
-        if (!letterPresent){
+        if (!letterPresent) {
             lives -= 1;
-            if (lives == 0){
+            if (lives == 0) {
                 //if lives is 0, means the user lost
-                JOptionPane.showMessageDialog(null, "Ran out of lives. The hidden word was: "+word);
+                JOptionPane.showMessageDialog(null, "Ran out of lives. The hidden word was: " + word);
                 System.exit(0);
             }
         }

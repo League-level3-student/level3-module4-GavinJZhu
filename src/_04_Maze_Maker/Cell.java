@@ -1,4 +1,5 @@
 package _04_Maze_Maker;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -14,10 +15,10 @@ public class Cell {
 
     private boolean northWall;
     private boolean southWall;
-    private boolean eastWall; 
+    private boolean eastWall;
     private boolean westWall;
 
-    public Cell(int row, int col){
+    public Cell(int row, int col) {
         this.row = row;
         this.col = col;
 
@@ -29,22 +30,22 @@ public class Cell {
         westWall = true;
     }
 
-    public void draw(Graphics g){
+    public void draw(Graphics g) {
         g.setColor(Color.BLUE);
         g.fillOval((col * size) + (size / 2) + MARGIN, (row * size) + (size / 2) + MARGIN, 4, 4);
 
         g.setColor(Color.RED);
 
-        if(northWall){
+        if (northWall) {
             g.drawLine((col * size) + MARGIN, (row * size) + MARGIN, (col * size) + size + MARGIN, (row * size) + MARGIN);
         }
-        if(southWall){
+        if (southWall) {
             g.drawLine((col * size) + MARGIN, (row * size) + size + MARGIN, (col * size) + size + MARGIN, (row * size) + size + MARGIN);
         }
-        if(eastWall){
+        if (eastWall) {
             g.drawLine((col * size) + size + MARGIN, (row * size) + MARGIN, (col * size) + size + MARGIN, (row * size) + size + MARGIN);
         }
-        if(westWall){
+        if (westWall) {
             g.drawLine((col * size) + MARGIN, (row * size) + MARGIN, (col * size) + MARGIN, (row * size) + size + MARGIN);
         }
     }

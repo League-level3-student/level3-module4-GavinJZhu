@@ -14,12 +14,12 @@ public class _00_QueueDemo {
          * myQueue.add("B");
          * myQueue.add("C");                  // newest object added
          * String head = myQueue.remove()     // returns "A" and the Queue
-         *                                    // size is decreased by 1 
+         *                                    // size is decreased by 1
          * the String "A" is removed from the queue when the remove() method
          * is called. Just like a Stack, even if the return value of the
          * remove() method is not stored in a variable, the size of the queue
          * is still decreased by 1 whenever remove() is called.
-         * 
+         *
          * The oldest object added to a Queue is called the 'front' or 'head'
          * of the Queue. The most recent object added to a Queue is called the
          * "back" or "tail" of the Queue. Similar to a Stack, adding and
@@ -31,11 +31,11 @@ public class _00_QueueDemo {
          *                 |           |
          *                  "C" "B" "A"
          */
-        
+
         /*
          * Initializing a Queue of Strings using the ArrayDeque class.
          * Deque is short for double-ended queue, which is a Queue with
-         * additional methods and functionality. 
+         * additional methods and functionality.
          */
         System.out.println("Here is a Queue of Strings: \n");
 
@@ -61,15 +61,15 @@ public class _00_QueueDemo {
          * Notice the size is smaller by 1 after the remove() method
          */
         System.out.println("Queue size: " + lineToEnter.size());
-        
+
         /*
          * Looping through the Queue and clearing it
          */
         System.out.println("\nRemoving all the Strings off the Queue:");
-        while( ! lineToEnter.isEmpty() ) {
+        while (!lineToEnter.isEmpty()) {
             System.out.println(lineToEnter.remove());
         }
-        
+
         System.out.println("Queue size: " + lineToEnter.size());
     }
 }

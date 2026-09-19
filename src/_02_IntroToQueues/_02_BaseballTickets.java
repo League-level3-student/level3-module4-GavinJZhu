@@ -33,34 +33,33 @@ import java.util.ArrayDeque;
  */
 
 public class _02_BaseballTickets {
+    static int minutes = 0;
 
-    public static int calculateWaitTime( ArrayDeque<Integer> ticketsQueue, int position ) {
-        int minutes = 0;
+    static public int calculateWaitTime(ArrayDeque<Integer> ticketsQueue, int position) {
+        minutes = 0;
         //dynamicPosition tracks the position of the person at the queried position
         int dynamicPosition = position;
         int maxPosition = ticketsQueue.size();
 
         //checks whether the person at dynamicPosition has gotten all their tickets
         while (!isPositionValueCompleted(ticketsQueue, dynamicPosition)) {
-            //System.out.println("Queue: "+ticketsQueue);
             int poppedVar = ticketsQueue.pop();
-            //System.out.println("Queue after pop: "+ticketsQueue);
 
-            //if the variable being popped's value is 0, add it to the back undecremented
-            if (poppedVar == 0){
-                ticketsQueue.addLast(0);
+            //if the variable being popped's value is 0, make maxPosition smaller and do not re-add
+            if (poppedVar <= 1) {
+                maxPosition -= 1;
                 dynamicPosition -= 1;
+                minutes++;
             }
 
             //otherwise, add it to the back decremented (while adding to the minute counter)
             else {
-                ticketsQueue.addLast(poppedVar-1);
-                //System.out.println("Queue after push: "+ticketsQueue);
+                ticketsQueue.addLast(poppedVar - 1);
                 minutes += 1;
 
                 //if the index of the queried item is 0 upon popping, push his value back to the top (
-                if (dynamicPosition == 0){
-                    dynamicPosition = maxPosition-1;
+                if (dynamicPosition == 0) {
+                    dynamicPosition = maxPosition - 1;
                 }
 
                 //otherwise, subtract value as he advances in the queue
@@ -68,21 +67,16 @@ public class _02_BaseballTickets {
                     dynamicPosition -= 1;
                 }
             }
-            //System.out.println("Minutes: "+minutes);
-            //System.out.println("Popped: "+poppedVar + " | Updated dynamicPosition: "+ dynamicPosition);
+            System.out.println(ticketsQueue);
         }
-        //System.out.println(ticketsQueue.getFirst());
         return minutes;
     }
-    static boolean isPositionValueCompleted(ArrayDeque<Integer> ticketsQueue, int position){
-        //System.out.println("Checking Position "+position);
+
+    static boolean isPositionValueCompleted(ArrayDeque<Integer> ticketsQueue, int position) {
         boolean completed = false;
-        int currentIndex = 0;
-        for (int element : ticketsQueue) {
-            if (currentIndex == position) {
-                completed = element == 0;
-            }
-            currentIndex++;
+        if (position == 0 && ticketsQueue.getFirst() <= 1){
+            minutes+=1;
+            completed = true;
         }
         return completed;
     }

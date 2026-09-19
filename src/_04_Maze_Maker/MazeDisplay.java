@@ -1,11 +1,12 @@
 package _04_Maze_Maker;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class MazeDisplay extends JPanel{
+public class MazeDisplay extends JPanel {
     private static final long serialVersionUID = 1L;
 
     public static final int WIDTH = 800;
@@ -15,7 +16,7 @@ public class MazeDisplay extends JPanel{
 
     private Maze maze;
 
-    MazeDisplay(){
+    MazeDisplay() {
         super();
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
@@ -31,7 +32,7 @@ public class MazeDisplay extends JPanel{
     }
 
     @Override
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
         maze.draw(g);
     }
 

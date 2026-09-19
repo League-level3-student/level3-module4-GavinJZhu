@@ -10,14 +10,13 @@ public class TestMatchingBrackets {
     public static boolean doBracketsMatch(String b) {
         Stack<Character> chars = new Stack<>();
         char[] charsOfString = b.toCharArray();
-        if (charsOfString[0] == '}'){
+        if (charsOfString[0] == '}') {
             return false;
         }
-        for (char character : charsOfString){
+        for (char character : charsOfString) {
             if (character == '{') {
                 chars.push('a');
-            }
-            else if (character == '}') {
+            } else if (character == '}') {
                 chars.pop();
             }
         }
