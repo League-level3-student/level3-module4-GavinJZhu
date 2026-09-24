@@ -70,6 +70,9 @@ public class Hangman implements KeyListener {
     }
 
     public void playOneWord(String word) {
+        //debug
+        System.out.println(word);
+
         //sets the word status in the game to have underscores for however many letters there are
         wordGuess.repeat("_ ", word.length());
 
@@ -96,13 +99,12 @@ public class Hangman implements KeyListener {
         //iterates through all characters of word and checks if there are
         //matches with the typed key
         boolean letterPresent = false;
-        for (int i = 0; i < wordGuess.length()*2; i+=2) {
+        for (int i = 0; i < wordGuess.length(); i+=2) {
             if (word.charAt(i/2) == e.getKeyChar()) {
-                wordGuess.setCharAt((i/2), e.getKeyChar());
+                wordGuess.setCharAt((i), e.getKeyChar());
                 letterPresent = true;
             }
         }
-        System.out.println(wordGuess);
 
         //if guessed letter isn't in word, subtract lives by 1
         if (!letterPresent) {

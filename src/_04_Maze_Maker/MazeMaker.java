@@ -23,22 +23,38 @@ public class MazeMaker {
         //    This will be the starting point. Then select a random cell along
         //    the opposite wall and remove its exterior wall. This will be the
         //    finish line.
+        int randomColumn1 = randGen.nextInt(c);
+        int randomColumn2 = randGen.nextInt(c);
 
+        maze.getCell(0, randomColumn1).setNorthWall(false);
+        maze.getCell(4, randomColumn2).setSouthWall(false);
         // 2. select a random cell in the maze to start 
+        int randomCellColumn = randGen.nextInt(c);
+        int randomCellRow = randGen.nextInt(r);
 
         // 3. call the selectNextPath method with the randomly selected cell
+        selectNextPath(maze.getCell(randomCellRow, randomCellColumn));
 
         return maze;
     }
 
     // 4. Complete the selectNextPathMethod
     private static void selectNextPath(Cell currentCell) {
+
         // A. SET currentCell as visited
-
+        currentCell.setBeenVisited(true);
         // B. check for unvisited neighbors using the cell
-
+        ArrayList<Cell> unvisitedNeighbors = getUnvisitedNeighbors(currentCell);
         // C. if has unvisited neighbors,
+        if (!unvisitedNeighbors.isEmpty()){
+            int randomCell = randGen.nextInt(unvisitedNeighbors.size());
+            uncheckedCells.push(unvisitedNeighbors.get(randomCell));
+            removeWalls(currentCell, unvisitedNeighbors.get(randomCell));
 
+            currentCell = unvisitedNeighbors.get(randomCell);
+            currentCell.setBeenVisited(true);
+            selectNextPath(currentCell);
+        }
         // C1. select one at random.
 
         // C2. push it to the stack
@@ -49,7 +65,12 @@ public class MazeMaker {
 
         // C5. call the selectNextPath method with the current cell
 
-
+        else {
+            if (!uncheckedCells.isEmpty()){
+                currentCell = uncheckedCells.pop();
+                selectNextPath(currentCell);
+            }
+        }
         // D. if all neighbors are visited
 
         // D1. if the stack is not empty
